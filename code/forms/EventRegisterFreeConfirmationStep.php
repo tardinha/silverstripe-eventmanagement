@@ -101,7 +101,7 @@ class EventRegisterFreeConfirmationStep extends MultiFormStep {
 
 			$email->setTo($details['Email']);
 			$email->setSubject(sprintf(
-				'Confirm Registration For %s (%s)', $datetime->EventTitle(), $config->Title
+				'Confirm Registration For %s (%s)', $datetime->getTitle(), $config->Title
 			));
 
 			$email->setTemplate('EventRegistrationConfirmationEmail');
@@ -109,7 +109,7 @@ class EventRegisterFreeConfirmationStep extends MultiFormStep {
 				'Name'         => $details['Name'],
 				'Registration' => $registration,
 				'RegLink'      => $regLink,
-				'Time'         => $datetime,
+				'Title'        => $datetime->getTitle(),
 				'SiteConfig'   => $config,
 				'ConfirmLink'  => Director::absoluteURL($link)
 			));
