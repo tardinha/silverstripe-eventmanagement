@@ -98,11 +98,7 @@ class EventRegisterTicketsStep extends MultiFormStep {
 		$data     = $form->getData();
 
 		if ($datetime->Event()->OneRegPerEmail) {
-			if (Member::currentUserID()) {
-				$email = Member::currentUser()->Email;
-			} else {
-				$email = $data['Email'];
-			}
+			$email = $data['Email'];
 
 			$existing = DataObject::get_one('EventRegistration', sprintf(
 				'"Email" = \'%s\' AND "Status" <> \'Canceled\' AND "TimeID" = %d',
@@ -127,13 +123,8 @@ class EventRegisterTicketsStep extends MultiFormStep {
 		$registration = $this->form->getSession()->getRegistration();
 		$form->saveInto($registration);
 
-		if ($member = Member::currentUser()) {
-			$registration->Name  = $member->getName();
-			$registration->Email = $member->Email;
-		} else {
-			$registration->Name  = $data['Name'];
-			$registration->Email = $data['Email'];
-		}
+		$registration->Name  = $data['Name'];
+		$registration->Email = $data['Email'];
 
 		$registration->TimeID   = $datetime->ID;
 		$registration->MemberID = Member::currentUserID();
