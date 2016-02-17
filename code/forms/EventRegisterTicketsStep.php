@@ -127,7 +127,7 @@ class EventRegisterTicketsStep extends MultiFormStep {
 		$registration->Email = $data['Email'];
 
 		$registration->TimeID   = $datetime->ID;
-		$registration->MemberID = Member::currentUserID();
+		//$registration->MemberID = Member::currentUserID();
 
 		$total = $this->getTotal();
 		$registration->Total->setCurrency($total->getCurrency());
