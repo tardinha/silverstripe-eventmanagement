@@ -253,8 +253,7 @@ class RegistrableDateTime extends CalendarDateTime {
 	/**
 	 * @return string
 	 */
-/*
-	public function getTitle() {
+	public function getTimeTitle() {
 		$parts = CalendarUtil::get_date_string($this->StartDate, $this->EndDate);
 		if ($parts) {
 			$date = implode(' ', $parts);
@@ -273,7 +272,6 @@ class RegistrableDateTime extends CalendarDateTime {
 
 		return "$date $time";
 	}
-*/
 
 	/**
 	 * @return DateTime

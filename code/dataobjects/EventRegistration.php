@@ -28,10 +28,10 @@ class EventRegistration extends DataObject {
 	);
 
 	private static $summary_fields = array(
-		'Name'          => 'Name',
-		'Email'         => 'Email',
-		'Time.Title'    => 'Event',
-		'TotalQuantity' => 'Places'
+		'Name'           => 'Name',
+		'Email'          => 'Email',
+		'Time.TimeTitle' => 'Event',
+		'TotalQuantity'  => 'Places'
 	);
 
 	protected function onBeforeWrite() {
