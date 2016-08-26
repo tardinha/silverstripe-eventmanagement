@@ -18,12 +18,12 @@
 		"silverstripe-australia/gridfieldextensions": "~1.1",
 		"silverstripe/cms": ">=3.1",
 		"silverstripe/framework": ">=3.1",
-		"silverstripe/multiform": "1.1.*@dev",
+		"silverstripe/multiform": ">=1.1.*@dev",
 		"unclecheese/eventcalendar": "~1.0"
 	},
 	"suggest": {
 		"silverstripe/queuedjobs": "Allows sending out event reminder emails",
-		"silverstripe/payment": "Payment module. Note: Only use the 1.0.x branch line, others are incompatible!" 
+		"silverstripe/payment": "Payment module. Note: Only use the 1.0.x branch line, others are incompatible!"
 	},
 	"extra": {
 		"installer-name": "eventmanagement",
