@@ -38,7 +38,12 @@ class EventRegistration extends DataObject {
 		if (!$this->isInDB()) {
 			$generator = new RandomGenerator();
 			$this->Token = $generator->randomToken();
+
+    		if($this->getManagerEmail()) {
+    			$this->sendEmail();
+    		}
 		}
+
 
 		parent::onBeforeWrite();
 	}
@@ -72,6 +77,38 @@ class EventRegistration extends DataObject {
 		}
 
 		return $fields;
+	}
+
+	public function sendEmail()
+	{
+		$from = "The Hub Event Management <no-reply@dpc.nsw.gov.au>";
+		$to = $this->getManagerEmail();
+		$subject = "New event registration: " . $this->getTitle();
+
+		$email = Email::create();
+		$email
+		->setFrom($from)
+		->setTo($to)
+		->setSubject($subject)
+		->setTemplate('EventNotification')
+		->populateTemplate(ArrayData::create(array(
+					'Name'      => $this->Name,
+					'Email'     => $this->Email,
+					'Title'     => $this->getTitle(),
+					'StartDate' => $this->Time()->StartDate,
+					'StartTime' => $this->Time()->StartTime,
+					'EndDate'   => $this->Time()->EndDate,
+					'EndTime'   => $this->Time()->EndTime
+				)));
+
+		$email->send();
+
+	}
+
+
+
+	public function getManagerEmail() {
+		return $this->Time()->Event()->EventManagerEmail;
 	}
 
 	/**

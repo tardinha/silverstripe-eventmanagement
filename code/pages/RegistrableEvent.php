@@ -22,7 +22,8 @@ class RegistrableEvent extends CalendarEvent {
 		'AfterRegTitle'         => 'Varchar(255)',
 		'AfterRegContent'       => 'HTMLText',
 		'AfterUnregTitle'       => 'Varchar(255)',
-		'AfterUnregContent'     => 'HTMLText'
+		'AfterUnregContent'     => 'HTMLText',
+		'EventManagerEmail'     => 'Varchar(255)',
 	);
 
 	private static $has_many = array(
@@ -205,6 +206,11 @@ class RegistrableEvent extends CalendarEvent {
 		));
 
 		$fields->addFieldsToTab('Root.Email', array(
+			new EmailField(
+				'EventManagerEmail',
+				_t('EventManagement.EMAIL_EVENT_MANAGER', 'Event manager email to receive registration notifications?')
+			),
+
 			new CheckboxField(
 				'RegEmailConfirm',
 				_t('EventManagement.REQ_EMAIL_CONFIRM', 'Require email confirmation to complete free registrations?')
