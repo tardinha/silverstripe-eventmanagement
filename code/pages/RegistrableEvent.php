@@ -130,29 +130,32 @@ class RegistrableEvent extends CalendarEvent {
 			$fields->addFieldToTab('Root.Tickets', $generator);
 		}
 
-		$regGridFieldConfig = GridFieldConfig_Base::create()
-		->removeComponentsByType('GridFieldAddNewButton')
-		->removeComponentsByType('GridFieldDeleteAction')
-		->addComponents(
-			new GridFieldButtonRow('after'),
-			new GridFieldPrintButton('buttons-after-left'),
-			new GridFieldExportButton('buttons-after-left')
-		);
+        if($this->DateTimes()->first()) {
+        	$regGridFieldConfig = GridFieldConfig_Base::create()
+        	->removeComponentsByType('GridFieldAddNewButton')
+        	->removeComponentsByType('GridFieldDeleteAction')
+        	->addComponents(
+        		new GridFieldButtonRow('after'),
+        		new GridFieldPrintButton('buttons-after-left'),
+        		new GridFieldExportButton('buttons-after-left')
+        	);
 
-		$fields->addFieldsToTab('Root.Registrations', array(
-			new GridField(
-				'Registrations',
-				_t('EventManagement.REGISTRATIONS', 'Registrations'),
-				$this->DateTimes()->relation('Registrations')->filter('Status', 'Valid'),
-				$regGridFieldConfig
-			),
-			new GridField(
-				'CanceledRegistrations',
-				_t('EventManagement.CANCELLATIONS', 'Cancellations'),
-				$this->DateTimes()->relation('Registrations')->filter('Status', 'Canceled'),
-				$regGridFieldConfig
-			)
-		));
+        	$fields->addFieldsToTab('Root.Registrations', array(
+        		new GridField(
+        			'Registrations',
+        			_t('EventManagement.REGISTRATIONS', 'Registrations'),
+        			$this->DateTimes()->relation('Registrations')->filter('Status', 'Valid'),
+        			$regGridFieldConfig
+        		),
+        		new GridField(
+        			'CanceledRegistrations',
+        			_t('EventManagement.CANCELLATIONS', 'Cancellations'),
+        			$this->DateTimes()->relation('Registrations')->filter('Status', 'Canceled'),
+        			$regGridFieldConfig
+        		)
+        	));
+        }
+
 
 		if ($this->RegEmailConfirm) {
 			$fields->addFieldToTab('Root.Registrations', new ToggleCompositeField(
