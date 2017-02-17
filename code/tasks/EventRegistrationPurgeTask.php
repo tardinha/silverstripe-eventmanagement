@@ -22,18 +22,13 @@ class EventRegistrationPurgeTask extends BuildTask {
 	}
 
 	protected function purgeUnsubmittedRegistrations() {
-		$conn    = DB::getConn();
-		$created = $conn->formattedDatetimeClause('"EventRegistration"."Created"', '%U');
 
-		$items = DataObject::get(
-			'EventRegistration',
-			'"Status" = \'Unsubmitted\''
-			. " AND $created + \"Registrable\".\"RegistrationTimeLimit\" < " . time(),
-			null,
-			'INNER JOIN "CalendarDateTime" AS "DateTime" ON "TimeID" = "DateTime"."ID"'
-			. ' INNER JOIN "CalendarEvent" AS "Event" ON "DateTime"."EventID" = "Event"."ID"'
-			. ' INNER JOIN "RegistrableEvent" AS "Registrable" ON "Event"."ID" = "Registrable"."ID"'
-		);
+		$items = EventRegistration::get()
+								->filter("Status", "Unsubmitted")
+								->where("\"EventRegistration\".\"Created\" + INTERVAL \"RegistrableEvent\".\"RegistrationTimeLimit\" SECOND < '" . Convert::raw2sql(SS_DateTime::now()) . "'")
+								->innerJoin("CalendarDateTime", "\"CalendarDateTime\".\"ID\" = \"EventRegistration\".\"TimeID\"")
+								->innerJoin("CalendarEvent", "\"CalendarEvent\".\"ID\" = \"CalendarDateTime\".\"EventID\"")
+								->innerJoin("RegistrableEvent", "\"RegistrableEvent\".\"ID\" = \"CalendarEvent\".\"ID\"");
 
 		if ($items) {
 			$count = count($items);
