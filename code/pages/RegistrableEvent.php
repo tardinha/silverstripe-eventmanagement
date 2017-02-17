@@ -31,6 +31,10 @@ class RegistrableEvent extends CalendarEvent {
 		'DateTimes'   => 'RegistrableDateTime',
 		'Invitations' => 'EventInvitation'
 	);
+	
+	private static $indexes = array(
+		'RegistrationTimeLimit' => TRUE,
+	);
 
 	private static $defaults = array(
 		'RegistrationTimeLimit' => 900,

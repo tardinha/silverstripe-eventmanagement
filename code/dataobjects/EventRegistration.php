@@ -26,6 +26,11 @@ class EventRegistration extends DataObject {
 	private static $many_many_extraFields = array(
 		'Tickets' => array('Quantity' => 'Int')
 	);
+	
+	private static $indexes = array(
+		'Status' => TRUE,
+		'Created' => TRUE,
+	);
 
 	private static $summary_fields = array(
     		'Name'           => 'Name',
