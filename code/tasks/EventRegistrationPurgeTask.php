@@ -40,7 +40,7 @@ class EventRegistrationPurgeTask extends BuildTask {
 			$count = 0;
 		}
 
-		echo "$count unsubmitted registrations were permantently deleted.\n";
+		echo "$count unsubmitted registrations were permanently deleted.\n";
 	}
 
 	protected function purgeUnconfirmedRegistrations() {
